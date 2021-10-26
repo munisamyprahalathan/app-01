@@ -1,0 +1,30 @@
+name: aws-terraform-apply
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  aws-cd:
+    runs-on: [self-hosted]
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: clone repository
+        uses: actions/checkout@v2
+
+      - name: set up terraform
+        run: |
+          wget https://releases.hashicorp.com/terraform/0.14.3/terraform_0.14.3_linux_amd64.zip
+          unzip terraform_0.14.3_linux_amd64.zip
+          mv terraform /usr/local/bin/
+      - name: terraform init
+        id: tf-init
+        run: terraform init
+
+      - name: terraform apply
+        id: plan
+        run: |
+          terraform apply --auto-approve
+        continue-on-error: false
