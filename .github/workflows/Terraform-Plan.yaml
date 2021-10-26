@@ -63,7 +63,7 @@ jobs:
         continue-on-error: false
 
   TerraformPlan:
-    needs: [Lint, Format, Security, TerraformInitValidate]
+    needs: [Lint, Format, TerraformInitValidate]
     runs-on: [self-hosted]
     defaults:
       run:
